@@ -22,6 +22,7 @@ numberOfHorizontalAirlifts = airliftDetails[0]
 numberOfVerticalAirlifts = airliftDetails[numberOfHorizontalAirlifts + 1]
 
 print("-------------------------- Problem Statement1: Started -----------------------------------------")
+print("Hall dimensions : ", hallLength, "*", hallBreadth)
 #--------------------------------------------------------------------------------
 # Function to find the lengths of individual blocks (roomlet) created by airlifts
 #--------------------------------------------------------------------------------
@@ -61,9 +62,11 @@ for length in lengthWiseDivisions:
         atomicFunctionalSpaceArea[functionalSpaceIndex] = length * breadth
         functionalSpaceIndex += 1
 
-# print(functionalSpaceIndex)
 numberOfAtomicFunctionalSpaces = functionalSpaceIndex - 1
-# print(atomicFunctionalSpaceArea)
+
+print("Areas of individual roomlets -->")
+for roomletNumber in atomicFunctionalSpaceArea.keys():
+    print("\tRoomlet" + str(roomletNumber), ":", atomicFunctionalSpaceArea[roomletNumber])
 
 #-------------------------------------------------------------------------------------------
 # Algo to find the adjacent atomic functional spaces
@@ -126,12 +129,11 @@ for (functionalSpaceNumber, blocksList) in enumerate(finalListOfFunctionalSpaces
     functionalSpaceAreas[functionalSpaceNumber] = sum(atomicFunctionalSpaceArea[x] for x in blocksList)
    
 # print(functionalSpaceAreas)
-
+print("A total of", len(finalListOfFunctionalSpaces), "functional spaces are available")
+print("-------------------------- Problem Statement1: Ended -------------------------------------------")
 #-------------------------------------------------------------------------------------------
 # Problem Statement 2: Find the soultion to get the Functional Spaces for the requirement
 #-------------------------------------------------------------------------------------------
-print("---- Created Functional Spaces ----")
-print("-------------------------- Problem Statement1: Ended -------------------------------------------")
 print()
 print("-------------------------- Problem Statement2: Started -----------------------------------------")
 #--------------------------------------------------------------------------------------------
@@ -196,8 +198,8 @@ def get_most_efficient_allocation(allPossibleFunctionalSpaceAllocations, numberO
     
     allPossibleFunctionalSpaceAllocations.sort(key=lambda allocation: (sum(functionalSpaceAreas[fsNumber] for fsNumber in allocation), sum(len(finalListOfFunctionalSpaces[fsNumber]) for fsNumber in allocation)))
     
-    #for allocation in allPossibleFunctionalSpaceAllocations:
-        #print(allocation)
+    # for allocation in allPossibleFunctionalSpaceAllocations:
+        # print(allocation)
         # print([item for sublist in allocation for item in sublist])
         # print(sum(functionalSpaceAreas[fsNumber] for fsNumber in allocation), len(allocation))
         
@@ -218,11 +220,11 @@ def get_most_efficient_allocation(allPossibleFunctionalSpaceAllocations, numberO
 # Function: To find the most efficient functional spaces for a given set of requirements
 #-----------------------------------------------------------------------------------------------
 def display_solutions(functionalSpaceAllocations):
-    #print(functionalSpaceAllocations)
+    # print(functionalSpaceAllocations)
     for (solutionRank, allocation) in enumerate(functionalSpaceAllocations, 1):
         print("Solution", solutionRank, "-->")
         for (requestNumber, individualRequestAllocation) in enumerate(allocation, 1):
-            print("Client request", requestNumber, " : ", end="")
+            print("Client request", requestNumber, ":", end="")
             for atomicFunctionalSpace in individualRequestAllocation:
                 print("Roomlet" + str(atomicFunctionalSpace), ' ', end="")
             print()
@@ -232,12 +234,13 @@ def display_solutions(functionalSpaceAllocations):
 while(1):
     inputRequest = input("Number of requests hotel received for a particular day? (type: q for exit): ")
     if(inputRequest.lower() == 'q'): exit(0)
+    if(not inputRequest.isdigit()): continue
     
     requests = []
     count = 1
     
     for i in range(int(inputRequest)):
-        print("Client %d requested for space in sqmt:" % (count))
+        print("Client %d requested for space in sq. mt :" % (count))
         requests.append(int(input()))
         count = count + 1
         
